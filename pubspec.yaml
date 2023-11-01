@@ -1,14 +1,15 @@
 name: quiz_app_tutorial
 description: A new Flutter project.
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.0.2 <4.0.0'
+  sdk: ">=3.0.2 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  shared_preferences: ^2.0.8
 
 dev_dependencies:
   flutter_test:

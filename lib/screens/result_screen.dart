@@ -8,9 +8,11 @@ class ResultScreen extends StatelessWidget {
   const ResultScreen({
     super.key,
     required this.score,
+    required this.highScore,
   });
 
   final int score;
+  final int highScore;
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +55,22 @@ class ResultScreen extends StatelessWidget {
                 ],
               ),
             ],
+          ),
+          Text(
+            'High Score: $highScore',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+
+          // Start New Button
+          ElevatedButton(
+            onPressed: () {
+              // Navigate back to the quiz screen or start a new quiz
+              Navigator.of(context).pop(); // Adjust this navigation as needed
+            },
+            child: Text('Start New'),
           ),
         ],
       ),

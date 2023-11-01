@@ -16,7 +16,7 @@ class _QuizScreenState extends State<QuizScreen> {
   int? selectedAnswerIndex;
   int questionIndex = 0;
   int score = 0;
-
+  int highScore = 0;
   void pickAnswer(int value) {
     selectedAnswerIndex = value;
     final question = questions[questionIndex];
@@ -24,6 +24,11 @@ class _QuizScreenState extends State<QuizScreen> {
       score++;
     }
     setState(() {});
+    if (score > highScore) {
+      setState(() {
+        highScore = score;
+      });
+    }
   }
 
   void goToNextQuestion() {
@@ -80,6 +85,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         MaterialPageRoute(
                           builder: (_) => ResultScreen(
                             score: score,
+                            highScore: highScore,
                           ),
                         ),
                       );
