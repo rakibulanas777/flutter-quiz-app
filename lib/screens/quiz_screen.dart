@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-
-import '/models/questions.dart';
-import '/screens/result_screen.dart';
-import '/widgets/answer_card.dart';
-import '/widgets/next_button.dart';
+import 'package:quiz_app_tutorial/models/questions.dart';
+import 'package:quiz_app_tutorial/screens/result_screen.dart';
+import 'package:quiz_app_tutorial/widgets/answer_card.dart';
+import 'package:quiz_app_tutorial/widgets/next_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class QuizScreen extends StatefulWidget {
-  const QuizScreen({super.key});
+  const QuizScreen({Key? key});
 
   @override
   State<QuizScreen> createState() => _QuizScreenState();
@@ -16,7 +16,32 @@ class _QuizScreenState extends State<QuizScreen> {
   int? selectedAnswerIndex;
   int questionIndex = 0;
   int score = 0;
-  int highScore = 0;
+  int highScore = 0; // Add high score variable
+
+  @override
+  void initState() {
+    super.initState();
+    _loadHighScore();
+  }
+
+  void _loadHighScore() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedHighScore = prefs.getInt('high_score') ?? 0;
+    setState(() {
+      highScore = savedHighScore;
+    });
+  }
+
+  void _updateHighScore(int newScore) async {
+    if (newScore > highScore) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setInt('high_score', newScore);
+      setState(() {
+        highScore = newScore;
+      });
+    }
+  }
+
   void pickAnswer(int value) {
     selectedAnswerIndex = value;
     final question = questions[questionIndex];
@@ -24,11 +49,6 @@ class _QuizScreenState extends State<QuizScreen> {
       score++;
     }
     setState(() {});
-    if (score > highScore) {
-      setState(() {
-        highScore = score;
-      });
-    }
   }
 
   void goToNextQuestion() {
@@ -52,6 +72,13 @@ class _QuizScreenState extends State<QuizScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            Text(
+              'High Score: $highScore',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             Text(
               question.question,
               style: const TextStyle(
@@ -77,10 +104,10 @@ class _QuizScreenState extends State<QuizScreen> {
                 );
               },
             ),
-            // Next Button
             isLastQuestion
                 ? RectangularButton(
                     onPressed: () {
+                      _updateHighScore(score);
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (_) => ResultScreen(

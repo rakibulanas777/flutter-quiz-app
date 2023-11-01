@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '/models/questions.dart';
 import '/screens/quiz_screen.dart';
-import '/widgets/next_button.dart';
 
 class ResultScreen extends StatelessWidget {
   const ResultScreen({
@@ -63,14 +62,16 @@ class ResultScreen extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-
-          // Start New Button
           ElevatedButton(
             onPressed: () {
-              // Navigate back to the quiz screen or start a new quiz
-              Navigator.of(context).pop(); // Adjust this navigation as needed
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => QuizScreen(),
+                ),
+              );
             },
-            child: Text('Start New'),
+            child: Text('Start new'),
           ),
         ],
       ),
