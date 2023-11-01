@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app_tutorial/models/questions.dart';
-import 'package:quiz_app_tutorial/screens/result_screen.dart';
-import 'package:quiz_app_tutorial/widgets/answer_card.dart';
-import 'package:quiz_app_tutorial/widgets/next_button.dart';
+import 'package:quiz_app/widgets/answer_card.dart';
+import 'package:quiz_app/models/questions.dart';
+import 'package:quiz_app/screens/result_screen.dart';
+import 'package:quiz_app/widgets/answer_card.dart';
+import 'package:quiz_app/widgets/next_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class QuizScreen extends StatefulWidget {
